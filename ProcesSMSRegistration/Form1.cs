@@ -88,5 +88,11 @@ namespace ProcesSMSRegistration
                                                     "0000", 0);
             MessageBox.Show(Result);
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Match round = new Match();
+            MessageBox.Show(round.Red1());
+        }
     }
 }
