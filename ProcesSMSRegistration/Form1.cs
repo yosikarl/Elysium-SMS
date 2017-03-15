@@ -52,28 +52,33 @@ namespace ProcesSMSRegistration
             // if using messages that wait for user input, do not create too much a load.
             if (!radioButtonSendSMS.Checked)
                 currMatch.SMSSent = true;
+            try
+            {
+                Team t;
+                if ((t = Teams.FindByNumber(currMatch.B1)) != null)
+                    ProcesSMSRegistration.SendSMS.Send(currMatch.Blue1(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                if ((t = Teams.FindByNumber(currMatch.B2)) != null)
+                    ProcesSMSRegistration.SendSMS.Send(currMatch.Blue2(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                if ((t = Teams.FindByNumber(currMatch.B3)) != null)
+                    ProcesSMSRegistration.SendSMS.Send(currMatch.Blue3(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                if ((t = Teams.FindByNumber(currMatch.R1)) != null)
+                    ProcesSMSRegistration.SendSMS.Send(currMatch.Red1(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                if ((t = Teams.FindByNumber(currMatch.R2)) != null)
+                    ProcesSMSRegistration.SendSMS.Send(currMatch.Red2(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                if ((t = Teams.FindByNumber(currMatch.R3)) != null)
+                    ProcesSMSRegistration.SendSMS.Send(currMatch.Red3(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+            }
+            finally
+            {
+                currMatch.SMSSent = true;
+            }
 
-            Team t;
-            if ((t = Teams.FindByNumber(currMatch.B1)) != null)
-                ProcesSMSRegistration.SendSMS.Send(currMatch.Blue1(),
-                                                   t.PhoneNumbers, radioButtonSendSMS.Checked);
-            if ((t = Teams.FindByNumber(currMatch.B2)) != null)
-                ProcesSMSRegistration.SendSMS.Send(currMatch.Blue2(),
-                                                   t.PhoneNumbers, radioButtonSendSMS.Checked);
-            if ((t = Teams.FindByNumber(currMatch.B3)) != null)
-                ProcesSMSRegistration.SendSMS.Send(currMatch.Blue3(),
-                                                   t.PhoneNumbers, radioButtonSendSMS.Checked);
-            if ((t = Teams.FindByNumber(currMatch.R1)) != null)
-                ProcesSMSRegistration.SendSMS.Send(currMatch.Red1(),
-                                                   t.PhoneNumbers, radioButtonSendSMS.Checked);
-            if ((t = Teams.FindByNumber(currMatch.R2)) != null)
-                ProcesSMSRegistration.SendSMS.Send(currMatch.Red2(),
-                                                   t.PhoneNumbers, radioButtonSendSMS.Checked);
-            if ((t = Teams.FindByNumber(currMatch.R3)) != null)
-                ProcesSMSRegistration.SendSMS.Send(currMatch.Red3(),
-                                                   t.PhoneNumbers, radioButtonSendSMS.Checked);
-
-            currMatch.SMSSent = true;
         }
 
         private void btnLoadSchedule_Click(object sender, EventArgs e)
@@ -136,9 +141,12 @@ namespace ProcesSMSRegistration
             if (!int.TryParse(txtDelay.Text, out currDelay))
                 MessageBox.Show("Delay must be an integer");
 
-            foreach (Match match in Matches)
-                if (match.OriginalTimeAsDateTime >= DateTime.Now)
-                    match.MinutesDelay = currDelay.ToString();
+            for (int i = 0; i < MatchSchedule.RowCount - 1; i++)
+            {
+                if (Matches[i].OriginalTimeAsDateTime >= DateTime.Now)
+                    Matches[i].MinutesDelay = txtDelay.Text;
+            }
+            MatchSchedule.Refresh();
         }
 
         private void btnLoadTeams_Click(object sender, EventArgs e)
@@ -170,6 +178,7 @@ namespace ProcesSMSRegistration
                     {
                         thisTeam = new Team();
                         thisTeam.Number = groupNum;
+                        thisTeam.Name = fields[1];
                         thisTeam.PhoneNumbers = "";
                         Teams.TheTeams.Add(thisTeam);
                     }
@@ -178,6 +187,9 @@ namespace ProcesSMSRegistration
                         thisTeam.AddPhoneNumber(fields[i]);
                 }
             }
+
+            txtTotalTeams.Text = Teams.TheTeams.Count.ToString();
+            txtTotalPhoneNumbers.Text = Teams.TheTeams.Sum(t => t.PhoneNumbers.Split(';').Length).ToString();
 
             setScheduleColors();
         }
@@ -209,6 +221,12 @@ namespace ProcesSMSRegistration
                     else
                         Cell.Style.ForeColor = Color.DarkGray;
                 }
+
+                chkTeamsForSMS.Items.Clear();
+                foreach (Team team in Teams.TheTeams)
+                {
+                    chkTeamsForSMS.Items.Add(team.Number);
+                }
             }
         }
 
@@ -220,7 +238,16 @@ namespace ProcesSMSRegistration
 
         private void button2_Click(object sender, EventArgs e)
         {
-            ProcesSMSRegistration.SendSMS.Send(txtMessage.Text, txtRecipients.Text, radioButtonSendSMS.Checked);
+            string recipients = txtRecipients.Text.Replace(',', ';');
+
+            foreach (int i in chkTeamsForSMS.CheckedIndices)
+            {
+                string teamNumber = chkTeamsForSMS.Items[i].ToString();
+                string teamPhoneNumbers = Teams.FindByNumber(teamNumber).PhoneNumbers;
+                recipients += ";" + teamPhoneNumbers;
+            }
+
+            ProcesSMSRegistration.SendSMS.Send(txtMessage.Text, recipients, radioButtonSendSMS.Checked);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -302,11 +329,11 @@ namespace ProcesSMSRegistration
                 object value = MatchSchedule.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
                 string minutesDelay = Matches[e.RowIndex].MinutesDelay;
 
-                for (int i = e.RowIndex; i < MatchSchedule.RowCount-1; i++)
+                for (int i = e.RowIndex; i < MatchSchedule.RowCount - 1; i++)
                 {
-                    MatchSchedule.Rows[i].Cells[e.ColumnIndex].Value = value;
                     Matches[i].MinutesDelay = minutesDelay;
                 }
+                MatchSchedule.Refresh();
             }
         }
 
@@ -315,14 +342,39 @@ namespace ProcesSMSRegistration
             int advanceTime = 15;
             int.TryParse(txtAdvanceTimeForSMS.Text, out advanceTime);
 
-            for (int i=0; i< Matches.Count; i++)
+            for (int i = 0; i < Matches.Count; i++)
             {
                 if (!Matches[i].SMSSent &&
-                    Matches[i].CorectedTimeAsDateTime >= DateTime.Now.AddMinutes(advanceTime-1) &&
+                    Matches[i].AutoSend &&
+                    Matches[i].CorectedTimeAsDateTime >= DateTime.Now.AddMinutes(advanceTime - 1) &&
                     Matches[i].CorectedTimeAsDateTime < DateTime.Now.AddMinutes(advanceTime))
                 {
                     SendSMSForMatches(i);
                 }
+            }
+        }
+
+        private void chkAutoAll_CheckedChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Matches.Count; i++)
+            {
+                Matches[i].AutoSend = chkAutoAll.Checked;
+            }
+        }
+
+        private void btnAllTeamsForSMS_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < chkTeamsForSMS.Items.Count; i++)
+            {
+                chkTeamsForSMS.SetItemChecked(i, true);
+            }
+        }
+
+        private void btnNonTeamForSMS_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < chkTeamsForSMS.Items.Count; i++)
+            {
+                chkTeamsForSMS.SetItemChecked(i, false);
             }
         }
     }

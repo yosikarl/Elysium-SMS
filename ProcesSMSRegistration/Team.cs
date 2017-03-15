@@ -33,10 +33,12 @@ namespace ProcesSMSRegistration
 
         public void AddPhoneNumber(string phoneNumber)
         {
-            string adjsutedPhoneNumber = new string (phoneNumber.Where(c => c >= '0' && c <= '9').ToArray());
+            string adjsutedPhoneNumber = new string (phoneNumber.Where(c => (c >= '0' && c <= '9') || c == '+').ToArray());
             if (adjsutedPhoneNumber.Length == 0)
                 return;
 
+            if (adjsutedPhoneNumber.StartsWith("+972"))
+                adjsutedPhoneNumber = adjsutedPhoneNumber.Substring(4);
             if (adjsutedPhoneNumber.FirstOrDefault() != '0')
                  adjsutedPhoneNumber = "0" + adjsutedPhoneNumber;
             if (!_phoneNumbers.Contains(adjsutedPhoneNumber))
