@@ -29,12 +29,12 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.btnLoadSchedule = new System.Windows.Forms.Button();
@@ -61,6 +61,10 @@
             this.btnLoadTeams = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnNonTeamForSMS = new System.Windows.Forms.Button();
+            this.btnAllTeamsForSMS = new System.Windows.Forms.Button();
+            this.chkTeamsForSMS = new System.Windows.Forms.CheckedListBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.txtRecipients = new System.Windows.Forms.TextBox();
@@ -73,10 +77,7 @@
             this.radioButtonShowMessage = new System.Windows.Forms.RadioButton();
             this.radioButtonSendSMS = new System.Windows.Forms.RadioButton();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label10 = new System.Windows.Forms.Label();
-            this.chkTeamsForSMS = new System.Windows.Forms.CheckedListBox();
-            this.btnAllTeamsForSMS = new System.Windows.Forms.Button();
-            this.btnNonTeamForSMS = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.Delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.correctedTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -91,6 +92,9 @@
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phoneNumbersDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.teamBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tabLog = new System.Windows.Forms.TabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.txtLog = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.MatchSchedule)).BeginInit();
             this.tabControlTest.SuspendLayout();
             this.tabPageSchedule.SuspendLayout();
@@ -101,6 +105,8 @@
             this.tabSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.teamBindingSource)).BeginInit();
+            this.tabLog.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // openFileDialog1
@@ -130,14 +136,14 @@
             // 
             this.MatchSchedule.AutoGenerateColumns = false;
             this.MatchSchedule.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.MatchSchedule.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.MatchSchedule.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.MatchSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MatchSchedule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.OriginalTime,
@@ -154,25 +160,25 @@
             this.SendSMS,
             this.SMSSent});
             this.MatchSchedule.DataSource = this.matchBindingSource;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.MatchSchedule.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.MatchSchedule.DefaultCellStyle = dataGridViewCellStyle2;
             this.MatchSchedule.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.MatchSchedule.Location = new System.Drawing.Point(3, 35);
             this.MatchSchedule.Name = "MatchSchedule";
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.MatchSchedule.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.MatchSchedule.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.MatchSchedule.RowTemplate.Height = 24;
             this.MatchSchedule.Size = new System.Drawing.Size(1168, 510);
             this.MatchSchedule.TabIndex = 5;
@@ -218,6 +224,7 @@
             this.tabControlTest.Controls.Add(this.tabPageTeams);
             this.tabControlTest.Controls.Add(this.tabPage1);
             this.tabControlTest.Controls.Add(this.tabSettings);
+            this.tabControlTest.Controls.Add(this.tabLog);
             this.tabControlTest.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tabControlTest.Location = new System.Drawing.Point(0, 39);
             this.tabControlTest.Name = "tabControlTest";
@@ -354,39 +361,39 @@
             // TeamsList
             // 
             this.TeamsList.AutoGenerateColumns = false;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.TeamsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.TeamsList.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.TeamsList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TeamsList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.numberDataGridViewTextBoxColumn,
             this.nameDataGridViewTextBoxColumn,
             this.phoneNumbersDataGridViewTextBoxColumn});
             this.TeamsList.DataSource = this.teamBindingSource;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.TeamsList.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.TeamsList.DefaultCellStyle = dataGridViewCellStyle5;
             this.TeamsList.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TeamsList.Location = new System.Drawing.Point(0, 0);
             this.TeamsList.Name = "TeamsList";
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.TeamsList.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.TeamsList.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.TeamsList.RowTemplate.Height = 24;
             this.TeamsList.Size = new System.Drawing.Size(1168, 483);
             this.TeamsList.TabIndex = 8;
@@ -419,6 +426,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button3);
             this.tabPage1.Controls.Add(this.btnNonTeamForSMS);
             this.tabPage1.Controls.Add(this.btnAllTeamsForSMS);
             this.tabPage1.Controls.Add(this.chkTeamsForSMS);
@@ -435,6 +443,43 @@
             this.tabPage1.TabIndex = 2;
             this.tabPage1.Text = "Test";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnNonTeamForSMS
+            // 
+            this.btnNonTeamForSMS.Location = new System.Drawing.Point(6, 206);
+            this.btnNonTeamForSMS.Name = "btnNonTeamForSMS";
+            this.btnNonTeamForSMS.Size = new System.Drawing.Size(97, 23);
+            this.btnNonTeamForSMS.TabIndex = 17;
+            this.btnNonTeamForSMS.Text = "None";
+            this.btnNonTeamForSMS.UseVisualStyleBackColor = true;
+            this.btnNonTeamForSMS.Click += new System.EventHandler(this.btnNonTeamForSMS_Click);
+            // 
+            // btnAllTeamsForSMS
+            // 
+            this.btnAllTeamsForSMS.Location = new System.Drawing.Point(5, 148);
+            this.btnAllTeamsForSMS.Name = "btnAllTeamsForSMS";
+            this.btnAllTeamsForSMS.Size = new System.Drawing.Size(97, 23);
+            this.btnAllTeamsForSMS.TabIndex = 16;
+            this.btnAllTeamsForSMS.Text = "All";
+            this.btnAllTeamsForSMS.UseVisualStyleBackColor = true;
+            this.btnAllTeamsForSMS.Click += new System.EventHandler(this.btnAllTeamsForSMS_Click);
+            // 
+            // chkTeamsForSMS
+            // 
+            this.chkTeamsForSMS.FormattingEnabled = true;
+            this.chkTeamsForSMS.Location = new System.Drawing.Point(132, 127);
+            this.chkTeamsForSMS.Name = "chkTeamsForSMS";
+            this.chkTeamsForSMS.Size = new System.Drawing.Size(120, 293);
+            this.chkTeamsForSMS.TabIndex = 15;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(8, 127);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(118, 17);
+            this.label10.TabIndex = 12;
+            this.label10.Text = "Team Recipients:";
             // 
             // label2
             // 
@@ -553,42 +598,15 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // label10
+            // button3
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(8, 127);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(118, 17);
-            this.label10.TabIndex = 12;
-            this.label10.Text = "Team Recipients:";
-            // 
-            // chkTeamsForSMS
-            // 
-            this.chkTeamsForSMS.FormattingEnabled = true;
-            this.chkTeamsForSMS.Location = new System.Drawing.Point(132, 127);
-            this.chkTeamsForSMS.Name = "chkTeamsForSMS";
-            this.chkTeamsForSMS.Size = new System.Drawing.Size(120, 293);
-            this.chkTeamsForSMS.TabIndex = 15;
-            // 
-            // btnAllTeamsForSMS
-            // 
-            this.btnAllTeamsForSMS.Location = new System.Drawing.Point(9, 148);
-            this.btnAllTeamsForSMS.Name = "btnAllTeamsForSMS";
-            this.btnAllTeamsForSMS.Size = new System.Drawing.Size(75, 23);
-            this.btnAllTeamsForSMS.TabIndex = 16;
-            this.btnAllTeamsForSMS.Text = "All";
-            this.btnAllTeamsForSMS.UseVisualStyleBackColor = true;
-            this.btnAllTeamsForSMS.Click += new System.EventHandler(this.btnAllTeamsForSMS_Click);
-            // 
-            // btnNonTeamForSMS
-            // 
-            this.btnNonTeamForSMS.Location = new System.Drawing.Point(11, 178);
-            this.btnNonTeamForSMS.Name = "btnNonTeamForSMS";
-            this.btnNonTeamForSMS.Size = new System.Drawing.Size(75, 23);
-            this.btnNonTeamForSMS.TabIndex = 17;
-            this.btnNonTeamForSMS.Text = "None";
-            this.btnNonTeamForSMS.UseVisualStyleBackColor = true;
-            this.btnNonTeamForSMS.Click += new System.EventHandler(this.btnNonTeamForSMS_Click);
+            this.button3.Location = new System.Drawing.Point(6, 177);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(97, 23);
+            this.button3.TabIndex = 18;
+            this.button3.Text = "Participating";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // Delay
             // 
@@ -691,6 +709,36 @@
             // 
             this.teamBindingSource.DataSource = typeof(ProcesSMSRegistration.Team);
             // 
+            // tabLog
+            // 
+            this.tabLog.Controls.Add(this.panel2);
+            this.tabLog.Location = new System.Drawing.Point(4, 25);
+            this.tabLog.Name = "tabLog";
+            this.tabLog.Padding = new System.Windows.Forms.Padding(3);
+            this.tabLog.Size = new System.Drawing.Size(1174, 548);
+            this.tabLog.TabIndex = 4;
+            this.tabLog.Text = "Log";
+            this.tabLog.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.txtLog);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel2.Location = new System.Drawing.Point(3, 53);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1168, 492);
+            this.panel2.TabIndex = 0;
+            // 
+            // txtLog
+            // 
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Location = new System.Drawing.Point(0, 0);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtLog.Size = new System.Drawing.Size(1168, 492);
+            this.txtLog.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -714,6 +762,9 @@
             this.tabSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.matchBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.teamBindingSource)).EndInit();
+            this.tabLog.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -776,6 +827,10 @@
         private System.Windows.Forms.Button btnAllTeamsForSMS;
         private System.Windows.Forms.CheckedListBox chkTeamsForSMS;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TabPage tabLog;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.TextBox txtLog;
     }
 }
 

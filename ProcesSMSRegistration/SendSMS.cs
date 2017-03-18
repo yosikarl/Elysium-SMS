@@ -18,7 +18,7 @@ namespace ProcesSMSRegistration
         /// </summary>
         /// <param name="message"></param>
         /// <param name="recipients"></param>
-        public static void Send(string message, string recipients, bool doSend)
+        public static string Send(string message, string recipients, bool doSend)
         {
             WS_SendSMS.SendMessageSoapClient SendSMS = new WS_SendSMS.SendMessageSoapClient();
             String Result = "";
@@ -36,10 +36,11 @@ namespace ProcesSMSRegistration
             }
             else
             {
-                MessageBox.Show("SMS to:\n\t" + recipients + "\n" +
-                                "Message:\n\t" + message);
+                Result = "SMS to:\n\t" + recipients + "\n" +
+                                "Message:\n\t" + message;
+                MessageBox.Show(Result);
             }
-
+                        
             logFile.WriteLine("{0},\"{1}\",\"{2}\",{3}",
                               DateTime.Now.ToString("yyyy -MM-dd HH:mm:ss"),
                               Result,
@@ -47,6 +48,8 @@ namespace ProcesSMSRegistration
                               recipients);
             logFile.Flush();
             //MessageBox.Show(Result);
+
+            return Result;
         }
     }
 }

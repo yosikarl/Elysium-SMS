@@ -11,14 +11,14 @@ namespace ProcesSMSRegistration
     {
         public string description = "";
 
-        private String _R1="4567";
-        private String _R2="675";
-        private String _R3="9567";
-        private String _B1="1345";
-        private String _B2="3567";
-        private String _B3="3856";
+        private String _R1="";
+        private String _R2="";
+        private String _R3="";
+        private String _B1="";
+        private String _B2="";
+        private String _B3="";
 
-        private DateTime originalTime = DateTime.Today.AddHours(10).AddMinutes(35);
+        private DateTime originalTime = DateTime.Today;
         private int delayMinutes = 0;
 
         public Match()
@@ -126,7 +126,7 @@ namespace ProcesSMSRegistration
                     minutesLen = value.Length - minuteStart;
 
                 this.originalTime = DateTime.Today.AddHours(int.Parse(value.Substring(hourStart.Value, hourLen.Value)))
-                                                  .AddMinutes(int.Parse(value.Substring(minuteStart.Value, hourLen.Value)));
+                                                  .AddMinutes(int.Parse(value.Substring(minuteStart.Value, minutesLen.Value)));
             }
         }
 
@@ -172,27 +172,27 @@ namespace ProcesSMSRegistration
 
         public string Red1(/*int R2, int R3, int B1, int B2, int B3, int time*/)
         {
-            return "Team " + _R1 + " your match " + Description + " is at " + CorrectedTime + " with the teams " + _R2 + "," + _R3 + " in red."+" against " + _B1 + "," + _B2 + "," + _B3;
+            return "Team " + _R1 + " your match " + Description + " is at " + CorrectedTime + " with teams " + _R2 + "," + _R3 + " in RED."+" against " + _B1 + "," + _B2 + "," + _B3;
         }
         public string Red2(/*int R1, int R3, int B1, int B2, int B3, int time*/)
         {
-            return "Team " + _R2 + " your match " + Description + " is at " + CorrectedTime + " with the teams " + _R1 + "," + _R3 + " in red." + " against " + _B1 + "," + _B2 + "," + _B3;
+            return "Team " + _R2 + " your match " + Description + " is at " + CorrectedTime + " with teams " + _R1 + "," + _R3 + " in RED." + " against " + _B1 + "," + _B2 + "," + _B3;
         }
         public string Red3(/*int R1, int R2, int B1, int B2, int B3, int time*/)
         {
-            return "Team " + _R3 + " your match " + Description + " is at " + CorrectedTime + " with the teams " + _R1 + "," + _R2+ " in red." + " against " + _B1 + "," + _B2 + "," + _B3;
+            return "Team " + _R3 + " your match " + Description + " is at " + CorrectedTime + " with teams " + _R1 + "," + _R2+ " in RED." + " against " + _B1 + "," + _B2 + "," + _B3;
         }
         public string Blue1(/*int B2, int B3, int R1, int R2, int R3, int time*/)
         {
-            return "Team " + _B1 + " your match " + Description + " is at " + CorrectedTime + " with the teams " + _B2 + "," + _B3 + " in blue." + " against " + _R1 + "," + _R2 + "," + _R3;
+            return "Team " + _B1 + " your match " + Description + " is at " + CorrectedTime + " with teams " + _B2 + "," + _B3 + " in BLUE." + " against " + _R1 + "," + _R2 + "," + _R3;
         }
         public string Blue2(/*int B1, int B3, int R1, int R2, int R3, int time*/)
         {
-            return "Team " + _B2 + " your match " + Description + " is at " + CorrectedTime + " with the teams " + _B1 + "," + _B3 + " in red." + " against " + _R1 + "," + _R2 + "," + _R3;
+            return "Team " + _B2 + " your match " + Description + " is at " + CorrectedTime + " with teams " + _B1 + "," + _B3 + " in BLUE." + " against " + _R1 + "," + _R2 + "," + _R3;
         }
         public string Blue3(/*int B1, int B2, int R1, int R2, int R3, int time*/)
         {
-            return "Team " + _B3 + " your match " + Description + " is at " + CorrectedTime + " with the teams " + _B1 + "," + _B2 + " in red." + " against " + _R1 + "," + _R2 + "," + _R3;
+            return "Team " + _B3 + " your match " + Description + " is at " + CorrectedTime + " with teams " + _B1 + "," + _B2 + " in BLUE." + " against " + _R1 + "," + _R2 + "," + _R3;
         }
     }
 }

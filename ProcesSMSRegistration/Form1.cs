@@ -56,23 +56,23 @@ namespace ProcesSMSRegistration
             {
                 Team t;
                 if ((t = Teams.FindByNumber(currMatch.B1)) != null)
-                    ProcesSMSRegistration.SendSMS.Send(currMatch.Blue1(),
-                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                    LogSending(ProcesSMSRegistration.SendSMS.Send(currMatch.Blue1(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked));
                 if ((t = Teams.FindByNumber(currMatch.B2)) != null)
-                    ProcesSMSRegistration.SendSMS.Send(currMatch.Blue2(),
-                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                    LogSending(ProcesSMSRegistration.SendSMS.Send(currMatch.Blue2(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked));
                 if ((t = Teams.FindByNumber(currMatch.B3)) != null)
-                    ProcesSMSRegistration.SendSMS.Send(currMatch.Blue3(),
-                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                    LogSending(ProcesSMSRegistration.SendSMS.Send(currMatch.Blue3(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked));
                 if ((t = Teams.FindByNumber(currMatch.R1)) != null)
-                    ProcesSMSRegistration.SendSMS.Send(currMatch.Red1(),
-                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                    LogSending(ProcesSMSRegistration.SendSMS.Send(currMatch.Red1(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked));
                 if ((t = Teams.FindByNumber(currMatch.R2)) != null)
-                    ProcesSMSRegistration.SendSMS.Send(currMatch.Red2(),
-                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                    LogSending(ProcesSMSRegistration.SendSMS.Send(currMatch.Red2(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked));
                 if ((t = Teams.FindByNumber(currMatch.R3)) != null)
-                    ProcesSMSRegistration.SendSMS.Send(currMatch.Red3(),
-                                                       t.PhoneNumbers, radioButtonSendSMS.Checked);
+                    LogSending(ProcesSMSRegistration.SendSMS.Send(currMatch.Red3(),
+                                                       t.PhoneNumbers, radioButtonSendSMS.Checked));
             }
             finally
             {
@@ -85,7 +85,7 @@ namespace ProcesSMSRegistration
         {
             // MessageBox.Show("Hello, World!");
 
-            openScheduleFileDialog.Filter = "Qualification Schedule|*Quals.csv|Any CSV File|*.csv";
+            openScheduleFileDialog.Filter = "Qualification Schedule|*Quals.csv|Practice Schedule|*Practice.csv|Any CSV File|*.csv";
             openScheduleFileDialog.ShowDialog();
             string scheduleFileName = openScheduleFileDialog.FileName;
 
@@ -117,12 +117,17 @@ namespace ProcesSMSRegistration
                     if (fields[1] == null || fields[1].Length == 0)
                         continue;
 
+                    // skip all the header line
                     if (!headerFound)
                     {
                         headerFound = true;
                         continue;
                     }
-                    // skip all the header line
+
+                    // Skip break (LUNCH / DINNER etc) lines
+                    if (fields[0] == null || fields[0].Length == 0)
+                        continue;
+
                     // Time,Description,Match,Blue 1,Blue 2,Blue 3,Red 1,Red 2,Red 3
 
                     Matches.Add(new Match(fields[1], fields[6], fields[7], fields[8], fields[3], fields[4], fields[5], fields[0]));
@@ -247,7 +252,12 @@ namespace ProcesSMSRegistration
                 recipients += ";" + teamPhoneNumbers;
             }
 
-            ProcesSMSRegistration.SendSMS.Send(txtMessage.Text, recipients, radioButtonSendSMS.Checked);
+            LogSending(ProcesSMSRegistration.SendSMS.Send(txtMessage.Text, recipients, radioButtonSendSMS.Checked));
+        }
+
+        private void LogSending(string sendStatus)
+        {
+            txtLog.Text += Environment.NewLine + DateTime.Now.ToShortTimeString() + ": " + sendStatus;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -344,10 +354,17 @@ namespace ProcesSMSRegistration
 
             for (int i = 0; i < Matches.Count; i++)
             {
-                if (!Matches[i].SMSSent &&
-                    Matches[i].AutoSend &&
-                    Matches[i].CorectedTimeAsDateTime >= DateTime.Now.AddMinutes(advanceTime - 1) &&
-                    Matches[i].CorectedTimeAsDateTime < DateTime.Now.AddMinutes(advanceTime))
+                Match thisMatch = (Match)MatchSchedule.Rows[i].DataBoundItem;
+
+                if (thisMatch != null &&
+                    !thisMatch.SMSSent &&
+                    (thisMatch.AutoSend || (MatchSchedule.Rows[i] != null &&
+                                            MatchSchedule.Rows[i].Cells["AutoSend"] != null &&
+                                            ((DataGridViewCheckBoxCell)MatchSchedule.Rows[i].Cells["AutoSend"]).Value != null &&
+                                            (Boolean)((DataGridViewCheckBoxCell)MatchSchedule.Rows[i].Cells["AutoSend"]).Value)) &&
+                    //thisMatch.AutoSend &&
+                    thisMatch.CorectedTimeAsDateTime >= DateTime.Now.AddMinutes(advanceTime - 1) &&
+                    thisMatch.CorectedTimeAsDateTime < DateTime.Now.AddMinutes(advanceTime))
                 {
                     SendSMSForMatches(i);
                 }
@@ -375,6 +392,31 @@ namespace ProcesSMSRegistration
             for (int i = 0; i < chkTeamsForSMS.Items.Count; i++)
             {
                 chkTeamsForSMS.SetItemChecked(i, false);
+            }
+        }
+
+        private void button3_Click_1(object sender, EventArgs e)
+        {
+            for (int i = 0; i < chkTeamsForSMS.Items.Count; i++)
+            {
+                chkTeamsForSMS.SetItemChecked(i, false);
+            }
+
+            foreach (DataGridViewRow Row in MatchSchedule.Rows)
+            {
+                foreach (DataGridViewCell Cell in Row.Cells)
+                {
+                    if (Cell.ColumnIndex > 3 && Cell.ColumnIndex < 10)
+                    {
+                        if (Cell.Value != null)
+                        {
+                            string teamNumber = Cell.Value.ToString();
+                            int listEntryIndex = chkTeamsForSMS.FindStringExact(teamNumber);
+                            if (listEntryIndex >= 0)
+                                chkTeamsForSMS.SetItemChecked(listEntryIndex, true);
+                        }
+                    }
+                }
             }
         }
     }
