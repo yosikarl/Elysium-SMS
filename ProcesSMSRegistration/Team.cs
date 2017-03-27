@@ -25,6 +25,11 @@ namespace ProcesSMSRegistration
             set { _name = value; }
         }
 
+        public int Count
+        {
+            get { return _phoneNumbers.Count; }
+        }
+
         public string PhoneNumbers
         {
             get { return _phoneNumbers.Aggregate((a, b) => (a!=null&&a.Length>0 ? a + ";" : "") + b); }

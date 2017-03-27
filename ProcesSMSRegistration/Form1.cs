@@ -377,6 +377,7 @@ namespace ProcesSMSRegistration
             {
                 Matches[i].AutoSend = chkAutoAll.Checked;
             }
+            MatchSchedule.Refresh();
         }
 
         private void btnAllTeamsForSMS_Click(object sender, EventArgs e)
