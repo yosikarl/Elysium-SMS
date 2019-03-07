@@ -125,8 +125,17 @@ namespace ProcesSMSRegistration
                 if (!minutesLen.HasValue)
                     minutesLen = value.Length - minuteStart;
 
-                this.originalTime = DateTime.Today.AddHours(int.Parse(value.Substring(hourStart.Value, hourLen.Value)))
-                                                  .AddMinutes(int.Parse(value.Substring(minuteStart.Value, minutesLen.Value)));
+                int intHours = int.Parse(value.Substring(hourStart.Value, hourLen.Value));
+                int intMinutes = int.Parse(value.Substring(minuteStart.Value, minutesLen.Value));
+
+                // afternoon hours are sometimes written as 3:54 instead of 15:54
+                // we assume there are no matches earlier than 08:00 AM or later than 19:59 PM, 
+                // therefore any hours number <= 7 must be afternoon
+                if (intHours <= 7)
+                    intHours += 12;
+
+                this.originalTime = DateTime.Today.AddHours(intHours)
+                                                  .AddMinutes(intMinutes);
             }
         }
 
